@@ -3,22 +3,22 @@
 # Original script by Errol Byrd
 # Copyright (c) 2010, Errol Byrd <errolbyrd@gmail.com>
 #########################################
-# Modified by: Robin Parisi
-# Contact at: parisi.robin@gmail.com
-
+# Modified by Robin Parisi
+# Contact at parisi.robin@gmail.com
+# Github https://github.com/Fendtwick/ssh-manager 
 
 #================== Globals ==================================================
 
 # Version
-VERSION="0.3"
+VERSION="0.4"
 
 # Configuration
 HOST_FILE="$HOME/.ssh_servers"
 DATA_DELIM=":"
 DATA_ALIAS=1
-DATA_HADDR=2
-DATA_HPORT=3
-DATA_HUSER=4
+DATA_HUSER=2
+DATA_HADDR=3
+DATA_HPORT=4
 SSH_DEFAULT_PORT=22
 
 #================== Functions ================================================
@@ -28,11 +28,11 @@ function test_host() {
 	if [ $? != 0 ] ; then
 		echo -n "["
 		cecho -n -red "KO"
-		echo -n "]"
+		echo -n "]  "
 	else
 		echo -n "["
-		cecho -n -green "OK"
-		echo -n "]"
+		cecho -n -green "UP"
+		echo -n "]  "
 	fi 
 }
 
@@ -42,12 +42,12 @@ function separator() {
 
 function list_commands() {
 	separator
-	echo -e "Commandes disponibles :"
+	echo -e "Available commands"
 	separator
-	echo "cc  <alias> [username] => (connect to server)"
-	echo "add <alias>:<address>:[port]:<username> => (add new server)"
-	echo "del <alias> => (delete server)"
-	echo "export => (export config)"
+	echo "cc  <alias> [username]                           connect to server"
+	echo "add <alias>:<user>:<host>:[port]                 add new server"
+	echo "del <alias>                                      delete server"
+	echo "export                                           export config"
 }
 
 function probe ()
@@ -122,9 +122,9 @@ if [ ! -f $HOST_FILE ]; then touch "$HOST_FILE"; fi
 # without args
 if [ $# -eq 0 ]; then
 	separator 
-	echo "Liste des serveurs de $(whoami) : "
+	echo "List of available servers for user $(whoami) "
 	separator
-	while IFS=: read label ip port user        
+	while IFS=: read label user ip port         
 	do    
 	test_host $ip
 	echo -ne " "
@@ -134,6 +134,9 @@ if [ $# -eq 0 ]; then
 	cecho -n -yellow "@"
 	cecho -n -white $ip
 	echo -ne ' -> '
+	if [ "$port" == "" ]; then
+		port=$SSH_DEFAULT_PORT
+	fi
 	cecho -yellow $port
 	echo
 done < $HOST_FILE
@@ -179,7 +182,7 @@ fi
 ;;
 # Export config
 export )
-clear
+echo
 cat $HOST_FILE
 ;;
 # Delete ali
