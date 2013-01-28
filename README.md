@@ -4,7 +4,7 @@ SSH Manager
 
 A simple script to manage ssh connections
 
-![screenshot](https://github.com/Fendtwick/ssh-manager/raw/master/screenshot.png)
+![screenshot](https://github.com/robinparisi/ssh-manager/raw/master/screenshot.png)
 
 ## Installation
 
