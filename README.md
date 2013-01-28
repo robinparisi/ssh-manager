@@ -29,5 +29,6 @@ For example :
 ### Authors and Contributors
 
 Original script by Errol Byrd
-Copyright (c) 2010, Errol Byrd <errolbyrd@gmail.com>
-Modified by Robin Parisi (@Fendtwick)
+Copyright (c) 2010, Errol Byrd 
+
+Modified by Robin Parisi (@robinparisi)
