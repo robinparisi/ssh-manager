@@ -42,7 +42,7 @@ function separator() {
 
 function list_commands() {
 	separator
-	echo -e "Available commands"
+	echo -e "Availables commands"
 	separator
 	echo "cc  <alias> [username]                           connect to server"
 	echo "add <alias>:<user>:<host>:[port]                 add new server"
@@ -122,7 +122,7 @@ if [ ! -f $HOST_FILE ]; then touch "$HOST_FILE"; fi
 # without args
 if [ $# -eq 0 ]; then
 	separator 
-	echo "List of available servers for user $(whoami) "
+	echo "List of availables servers for user $(whoami) "
 	separator
 	while IFS=: read label user ip port         
 	do    
