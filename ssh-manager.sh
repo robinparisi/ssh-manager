@@ -10,7 +10,7 @@
 #================== Globals ==================================================
 
 # Version
-VERSION="0.4"
+VERSION="0.5"
 
 # Configuration
 HOST_FILE="$HOME/.ssh_servers"
@@ -23,8 +23,19 @@ SSH_DEFAULT_PORT=22
 
 #================== Functions ================================================
 
+function exec_ping() {
+	case $(uname) in 
+		MINGW*)
+			ping -n 1 -i 2 $@
+			;;
+		*)
+			ping -c1 -t 2 $@
+			;;
+	esac
+}
+
 function test_host() {
-	ping -c1 -t 2 $* > /dev/null
+	exec_ping $* > /dev/null
 	if [ $? != 0 ] ; then
 		echo -n "["
 		cecho -n -red "KO"
