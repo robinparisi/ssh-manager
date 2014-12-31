@@ -9,7 +9,7 @@ A simple script to manage ssh connections
 ## Installation
 
     $ cd ~
-    $ wget --no-check-certificate https://raw.github.com/Fendtwick/ssh-manager/master/ssh-manager.sh
+    $ wget --no-check-certificate https://raw.github.com/robinparisi/ssh-manager/master/ssh-manager.sh
     $ chmod +x ssh-manager.sh
     $ ./ssh-manager.sh
     
