@@ -55,10 +55,10 @@ function list_commands() {
 	separator
 	echo -e "Availables commands"
 	separator
-	echo "cc  <alias> [username]                           connect to server"
-	echo "add <alias>:<user>:<host>:[port]                 add new server"
-	echo "del <alias>                                      delete server"
-	echo "export                                           export config"
+	echo "$0 cc  <alias> [username]                           connect to server"
+	echo "$0 add <alias>:<user>:<host>:[port]                 add new server"
+	echo "$0 del <alias>                                      delete server"
+	echo "$0 export                                           export config"
 }
 
 function probe ()
