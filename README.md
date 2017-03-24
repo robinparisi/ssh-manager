@@ -1,6 +1,5 @@
-=============================
-SSH Manager
-=============================
+# SSH Manager
+
 
 A simple script to manage ssh connections on *inx ( Such as UNIX, Linux, Mac OS, etc)
 
