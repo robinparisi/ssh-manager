@@ -5,7 +5,7 @@
 #########################################
 # Modified by Robin Parisi
 # Contact at parisi.robin@gmail.com
-# Github https://github.com/Fendtwick/ssh-manager 
+# Github https://github.com/robinparisi/ssh-manager
 
 #================== Globals ==================================================
 
@@ -40,11 +40,11 @@ function test_host() {
 	if [ $? != 0 ] ; then
 		echo -n "["
 		cecho -n -red "KO"
-		echo -n "]  "
+		echo -n "]"
 	else
 		echo -n "["
 		cecho -n -green "UP"
-		echo -n "]  "
+		echo -n "]"
 	fi 
 }
 
@@ -145,7 +145,7 @@ if [ $# -eq 0 ]; then
 	while IFS=: read label user ip port         
 	do    
 	test_host $ip
-	echo -ne " "
+	echo -ne "\t"
 	cecho -n -blue $label
 	echo -ne ' ==> '
 	cecho -n -red $user 
