@@ -49,17 +49,17 @@ function test_host() {
 }
 
 function separator() {
-	echo -e "\t----\t----\t----\t----\t----\t----"
+	echo -e "----\t----\t----\t----\t----\t----\t----\t----"
 }
 
 function list_commands() {
 	separator
 	echo -e "Availables commands"
 	separator
-	echo "$0 cc  <alias> [username]                           connect to server"
-	echo "$0 add <alias>:<user>:<host>:[port]                 add new server"
-	echo "$0 del <alias>                                      delete server"
-	echo "$0 export                                           export config"
+	echo -e "$0 cc\t<alias> [username]\t\tconnect to server"
+	echo -e "$0 add\t<alias>:<user>:<host>:[port]\tadd new server"
+	echo -e "$0 del\t<alias>\t\t\t\tdelete server"
+	echo -e "$0 export\t\t\t\t\texport config"
 }
 
 function probe ()
