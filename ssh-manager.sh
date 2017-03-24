@@ -49,7 +49,7 @@ function test_host() {
 }
 
 function separator() {
-	echo "--------------------------------------------------------------------------------"
+	echo -e "\t----\t----\t----\t----\t----\t----"
 }
 
 function list_commands() {
@@ -92,29 +92,36 @@ function get_user ()
 	als=$1
 	get_raw "$als" | awk -F "$DATA_DELIM" '{ print $'$DATA_HUSER' }'
 }
+function server_add() {
+	probe "$alias"
+	if [ $? -eq 0 ]; then
+		as	echo "$0: alias '$alias' is in use"
+	else
+		echo "$alias$DATA_DELIM$user" >> $HOST_FILE
+		echo "new alias '$alias' added"
+	fi
+}
 
-function cecho {
+function cecho() {
 	while [ "$1" ]; do
 		case "$1" in 
 			-normal)        color="\033[00m" ;;
--black)         color="\033[30;01m" ;;
--red)           color="\033[31;01m" ;;
--green)         color="\033[32;01m" ;;
--yellow)        color="\033[33;01m" ;;
--blue)          color="\033[34;01m" ;;
--magenta)       color="\033[35;01m" ;;
--cyan)          color="\033[36;01m" ;;
--white)         color="\033[37;01m" ;;
--n)             one_line=1;   shift ; continue ;;
-*)              echo -n "$1"; shift ; continue ;;
-esac
-
-shift
-echo -en "$color"
-echo -en "$1"
-echo -en "\033[00m"
-shift
-
+			-black)         color="\033[30;01m" ;;
+			-red)           color="\033[31;01m" ;;
+			-green)         color="\033[32;01m" ;;
+			-yellow)        color="\033[33;01m" ;;
+			-blue)          color="\033[34;01m" ;;
+			-magenta)       color="\033[35;01m" ;;
+			-cyan)          color="\033[36;01m" ;;
+			-white)         color="\033[37;01m" ;;
+			-n)             one_line=1;   shift ; continue ;;
+			*)              echo -n "$1"; shift ; continue ;;
+		esac
+	shift
+	echo -en "$color"
+	echo -en "$1"
+	echo -en "\033[00m"
+	shift
 done
 if [ ! $one_line ]; then
 	echo
@@ -129,7 +136,6 @@ user=$3
 
 # if config file doesn't exist
 if [ ! -f $HOST_FILE ]; then touch "$HOST_FILE"; fi
-
 
 # without args
 if [ $# -eq 0 ]; then
@@ -155,60 +161,53 @@ done < $HOST_FILE
 
 list_commands
 
-exit 0;
+exit 0
 fi
 
 case "$cmd" in
-# Connect to host
-cc )
-probe "$alias"
-if [ $? -eq 0 ]; then
-	if [ "$user" == ""  ]; then
-		user=$(get_user "$alias")
-	fi
-
-	addr=$(get_addr "$alias")
-	port=$(get_port "$alias")
-
+	# Connect to host
+	cc )
+		probe "$alias"
+		if [ $? -eq 0 ]; then
+			if [ "$user" == ""  ]; then
+				user=$(get_user "$alias")
+			fi
+			addr=$(get_addr "$alias")
+			port=$(get_port "$alias")
 			# Use default port when parameter is missing
 			if [ "$port" == "" ]; then
 				port=$SSH_DEFAULT_PORT
 			fi
-
 			echo "connecting to '$alias' ($addr:$port)"
 			ssh $user@$addr -p $port
 		else
 			echo "$0: unknown alias '$alias'"
+			exit 1
 		fi
 		;;
 
-# Add new alias
-add )
-probe "$alias"
-if [ $? -eq 0 ]; then
-	as	echo "$0: alias '$alias' is in use"
-else
-	echo "$alias$DATA_DELIM$user" >> $HOST_FILE
-	echo "new alias '$alias' added"
-fi
-;;
-# Export config
-export )
-echo
-cat $HOST_FILE
-;;
-# Delete ali
-del )
-probe "$alias"
-if [ $? -eq 0 ]; then
-	cat $HOST_FILE | sed '/^'$alias$DATA_DELIM'/d' > /tmp/.tmp.$$
-	mv /tmp/.tmp.$$ $HOST_FILE
-	echo "alias '$alias' removed"
-else
-	echo "$0: unknown alias '$alias'"
-fi
-;;
-* )
-echo "$0: unrecognised command '$cmd'"
-;;
+	# Add new alias
+	add )
+		server_add
+		;;
+	# Export config
+	export )
+		echo
+		cat $HOST_FILE
+		;;
+	# Delete ali
+	del )
+		probe "$alias"
+		if [ $? -eq 0 ]; then
+			cat $HOST_FILE | sed '/^'$alias$DATA_DELIM'/d' > /tmp/.tmp.$$
+			mv /tmp/.tmp.$$ $HOST_FILE
+			echo "alias '$alias' removed"
+		else
+			echo "$0: unknown alias '$alias'"
+		fi
+		;;
+	* )
+		echo "$0: unrecognised command '$cmd'"
+		exit 1
+		;;
 esac
