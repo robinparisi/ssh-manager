@@ -10,7 +10,7 @@
 #================== Globals ==================================================
 
 # Version
-VERSION="0.5"
+VERSION="0.6"
 
 # Configuration
 HOST_FILE="$HOME/.ssh_servers"
@@ -19,6 +19,7 @@ DATA_ALIAS=1
 DATA_HUSER=2
 DATA_HADDR=3
 DATA_HPORT=4
+PING_DEFAULT_TTL=20
 SSH_DEFAULT_PORT=22
 
 #================== Functions ================================================
@@ -26,10 +27,10 @@ SSH_DEFAULT_PORT=22
 function exec_ping() {
 	case $(uname) in 
 		MINGW*)
-			ping -n 1 -i 2 $@
+			ping -n 1 -i $PING_DEFAULT_TTL $@
 			;;
 		*)
-			ping -c1 -t 2 $@
+			ping -c1 -t$PING_DEFAULT_TTL $@
 			;;
 	esac
 }
@@ -154,7 +155,7 @@ done < $HOST_FILE
 
 list_commands
 
-exit 1;
+exit 0;
 fi
 
 case "$cmd" in
@@ -210,6 +211,4 @@ fi
 * )
 echo "$0: unrecognised command '$cmd'"
 ;;
-esac	
-
-
+esac
