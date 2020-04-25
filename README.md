@@ -1,5 +1,6 @@
 # SSH Manager
 
+:warning: This script is not maintained anymore. It's a really old project and it's way better to use ssh_config with autocomplete or some alias for example.
 
 A simple script to manage ssh connections on *inx ( Such as UNIX, Linux, Mac OS, etc)
 
@@ -61,9 +62,3 @@ For example :
     del <alias>                                      
     export                                           
 
-### Authors and Contributors
-
-Original script by Errol Byrd
-Copyright (c) 2010, Errol Byrd 
-
-Modified by Robin Parisi (@robinparisi)
