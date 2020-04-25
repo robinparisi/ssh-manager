@@ -1,13 +1,8 @@
 #!/bin/bash
 #########################################
 # Original script by Errol Byrd
-# Copyright (c) 2010, Errol Byrd <errolbyrd@gmail.com>
 #########################################
 # Modified by Robin Parisi
-# Contact at parisi.robin@gmail.com
-# Github https://github.com/robinparisi/ssh-manager
-# github.io Page https://robinparisi.github.io/ssh-manager/
-
 #================== Globals ==================================================
 
 # Version
